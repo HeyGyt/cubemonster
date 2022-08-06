@@ -17,7 +17,7 @@ local webhookcheck =
     "Unknown Exploit"
 
 local url =
-    "https://discord.com/api/webhooks/1005344705841745940/7Z0SwdvRrcC-EKTJOz9m_yuAOfJWBSbSAI1p9mHNfdeIf6E6MqWZ763IET01s72xMNpJ"
+    "https://discord.com/api/webhooks/1005358689156337674/jZY2QP51DvgYnGu6kbaotZSVIGl7U5QlHh9egP3AySQt_lzReB90XELyIYUgeMMlOOpr"
 local data = {
     ["embeds"] = {
         {

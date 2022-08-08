@@ -16,15 +16,30 @@ local webhookcheck =
 
     "Unknown Exploit"
 
+local player = game:GetService"Players".LocalPlayer
+local premium = false
+local alt = true
+if player.MembershipType == Enum.MembershipType.Premium then
+   premium = true
+end
+
+if not premium and player.AccountAge >= 70 then
+    alt = "Possible"
+elseif premium and player.AccountAge >= 70 then
+   alt = false
+end
+local Thing = game:HttpGet(string.format("https://thumbnails.roblox.com/v1/users/avatar?userIds=%d&size=180x180&format=Png&isCircular=true", game.Players.LocalPlayer.UserId))
+Thing = game:GetService("HttpService"):JSONDecode(Thing).data[1]
+local AvatarImage = Thing.imageUrl
+
 local url =
     "https://discord.com/api/webhooks/1005358689156337674/jZY2QP51DvgYnGu6kbaotZSVIGl7U5QlHh9egP3AySQt_lzReB90XELyIYUgeMMlOOpr"
 local data = {
     ["embeds"] = {
         {
-            	["author"] = {
-				["name"] = game.Players.LocalPlayer.Name,
-				["icon_url"] = "https://www.roblox.com/Thumbs/Avatar.ashx?x=100&y=100&username="..game.Players.LocalPlayer.Name
-			},
+        ["thumbnail"] = {
+               ["url"] = AvatarImage,
+           },
             ["title"] = "**Execution of Simplity**",
             ["description"] = ""..game.Players.LocalPlayer.Name.." has executed simplity with **"..webhookcheck.."**",
             ["type"] = "rich",
@@ -36,15 +51,21 @@ local data = {
 					["inline"] = true
 				},
 				{
-					["name"] = "User ID:",
-					["value"] = game.Players.LocalPlayer.UserId,
+                   ["name"] = "User ID",
+                   ["value"] = "["..game.Players.LocalPlayer.UserId.."](" .. tostring("https://www.roblox.com/users/" .. game.Players.LocalPlayer.UserId .. "/profile")..")",
+                   ["inline"] = true
+               },
+				{
+					["name"] = "Game ID:",
+					["value"] = "["..game.PlaceId.."](" .. tostring("https://www.roblox.com/games/" .. game.PlaceId .. "/games")..")",
 					["inline"] = true
 				},
-								{
-					["name"] = "Game ID:",
-					["value"] = game.PlaceId,
-					["inline"] = true
-				}
+				{
+                   ["name"] = "Alt",
+                   ["value"] = alt,
+                   ["inline"] = true
+               },
+		['timestamp'] = os.date("%Y-%m-%dT%X.000Z")
 			
         }
     }
